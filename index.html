@@ -719,13 +719,57 @@
     .cta-band{ border-radius:20px; }
     .footer-top{ gap:35px; }
     .footer-cols{ width:100%; justify-content:space-between; gap:25px; }
+  }/* Hides the structural toggle checkbox from view */
+  #menu-toggle {
+    display: none;
+  }
+
+  /* Changes the cursor to a pointer when hovering over your menu button */
+  .menu-icon-btn {
+    cursor: pointer;
+  }
+
+  /* Style rule to show your navigation bar when the button is checked */
+  #menu-toggle:checked ~ #siteNav {
+    display: block !important;
+    visibility: visible !important;
   }
 body, section, main, div, h1, h2, h3, p, a, span { opacity: 1 !important; visibility: visible !important; }
+
+/* 1. Hide the mechanical toggle switch */
+#menu-toggle {
+  display: none;
+}
+
+/* 2. Hide your navigation panel by default on mobile devices */
+.nav-links {
+  display: none;
+}
+
+/* 3. The logic: Show the links container when the checkbox is active */
+#menu-toggle:checked ~ .nav-links {
+  display: flex !important;
+}
+
+/* 4. Style the menu button so your horizontal bars are visible */
+.menu-icon-btn {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.line {
+  width: 25px;
+  height: 3px;
+  background-color: #f5f4f2; /* Uses your custom --white color token */
+  border-radius: 2px;
+}
 
 </style>
 </head>
 <body>
-
+<input type="checkbox" id="menu-toggle">
 <div class="site-bg" aria-hidden="true">
   <video id="bgvideo" autoplay muted loop playsinline preload="auto" style="position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; z-index: -2; object-fit: cover;">
     <source src="background.mp4" type="video/mp4">
@@ -741,6 +785,12 @@ body, section, main, div, h1, h2, h3, p, a, span { opacity: 1 !important; visibi
       <span class="logo-copy">
         <span class="logo-name">WEB CRAFT</span>
       </span>
+      <label for="menu-toggle" class="menu-icon-btn">
+  <div class="line"></div>
+  <div class="line"></div>
+  <div class="line"></div>
+</label>
+
     </a>
 
     <nav class="nav-links" aria-label="Primary">
