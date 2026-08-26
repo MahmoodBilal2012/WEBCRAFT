@@ -720,15 +720,16 @@
     .footer-top{ gap:35px; }
     .footer-cols{ width:100%; justify-content:space-between; gap:25px; }
   }
+body, section, main, div, h1, h2, h3, p, a, span { opacity: 1 !important; visibility: visible !important; }
 
 </style>
 </head>
 <body>
 
 <div class="site-bg" aria-hidden="true">
-  <video id="bgVideo" autoplay muted loop playsinline preload="auto">
+  <video id="bgvideo" autoplay muted loop playsinline preload="auto" style="position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; z-index: -2; object-fit: cover;">
     <source src="background.mp4" type="video/mp4">
-  </video>
+</video>
   <pre class="code-fallback" id="codeFallback" aria-hidden="true"></pre>
   <div class="site-bg-overlay"></div>
 </div>
