@@ -1,0 +1,54 @@
+WEBCRAFT — GITHUB UPLOAD ORDER
+
+1. Keep these root files in the repository root:
+   index.html
+   favicon.png
+   robots.txt
+   sitemap.xml
+   README.txt
+   README.md
+   security.txt
+
+2. Create/upload this folder:
+   assets/
+   - webcraft-favicon.png (if present)
+   - webcraft-logo.png
+   - webcraft-mark.png
+   - card-landing.webp
+   - card-websites.webp
+   - card-python.webp
+   - app.js
+
+3. Create/upload:
+   secret-pathways-assets/
+   - fonts.css
+   - three.min.js
+   - generated/
+       kage-approach.webp
+       kage-lantern-court.webp
+       kage-moonwater.webp
+       kage-sanmon-preview.webp
+   - foreground/
+       png/
+           temple-wall.webp
+           pine-tree.webp
+           tall-grass.webp
+           sakura-branch.webp
+           maple-leaves.webp
+           stone-lantern.webp
+           garden-bush.webp
+           basalt-stones.webp
+           hill.webp
+           shrine-ruins.webp
+
+4. Do not put the whole project inside another nested folder when committing.
+   index.html must be at repository root.
+
+5. Delete temporary .gitkeep files after their real files are uploaded.
+
+6. Commit the files, then wait for Vercel to redeploy.
+
+NOTE: the certificates/ folder (raw PDF scans) has been removed from this
+build. The Skills & Proof section now lists certifications as text — there
+is no PDF or image asset backing it, so nothing further needs uploading
+for that section.

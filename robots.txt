@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://webcraft-devs.vercel.app/sitemap.xml
