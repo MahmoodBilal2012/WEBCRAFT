@@ -3567,13 +3567,31 @@ function boot() {
   setTimeout(step, 60);
 }
 
+function afterLogoVideo(cb) {
+  /* keep the preloader up until the logo animation finishes (or is skipped),
+     so visitors actually see the WEBCRAFT reveal at the end of the clip */
+  const v = document.querySelector('#pre video');
+  const skip = document.getElementById('pre-skip');
+  let fired = false;
+  const go = () => { if (fired) return; fired = true; if (v) v.pause(); cb(); };
+  if (skip) skip.addEventListener('click', go);
+  if (!v || REDUCE || v.ended || v.error) return go();
+  v.addEventListener('ended', go);
+  v.addEventListener('error', go);
+  const p = v.play(); if (p && p.catch) p.catch(go);   /* autoplay blocked */
+  const left = isFinite(v.duration) && v.duration ? (v.duration - v.currentTime) * 1000 : 10000;
+  setTimeout(go, Math.min(left + 1500, 12000));        /* safety net */
+}
+
 function fallback(err) {
   document.documentElement.classList.add('no-webgl');
   document.body.classList.add('no-webgl');
-  document.body.classList.remove('is-locked');
-  preEl.classList.add('done');
-  $$('[data-rv], .mask-line').forEach(e => e.classList.add('rv-in'));
   window.__webcraftFallback = true;
+  afterLogoVideo(() => {
+    document.body.classList.remove('is-locked');
+    preEl.classList.add('done');
+    $$('[data-rv], .mask-line').forEach(e => e.classList.add('rv-in'));
+  });
 }
 
 function start() {
@@ -3595,12 +3613,14 @@ function start() {
     document.body.classList.remove('is-locked');
     preEl.classList.add('done');
   } else {
-    preEl.classList.add('done');
-    setTimeout(() => {
-      document.body.classList.remove('is-locked');
-      $('#hero').querySelectorAll('[data-rv], .mask-line').forEach((e, i) =>
-        setTimeout(() => e.classList.add('rv-in'), REDUCE ? 0 : 120 + i * 95));
-    }, REDUCE ? 0 : 340);
+    afterLogoVideo(() => {
+      preEl.classList.add('done');
+      setTimeout(() => {
+        document.body.classList.remove('is-locked');
+        $('#hero').querySelectorAll('[data-rv], .mask-line').forEach((e, i) =>
+          setTimeout(() => e.classList.add('rv-in'), REDUCE ? 0 : 120 + i * 95));
+      }, REDUCE ? 0 : 340);
+    });
   }
   running = true; tPrev = performance.now();
   INTRO.t0 = shot !== null ? 0 : (REDUCE ? performance.now() - 4000 : performance.now());
