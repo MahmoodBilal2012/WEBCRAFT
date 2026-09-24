@@ -3579,8 +3579,17 @@ function afterLogoVideo(cb) {
   v.addEventListener('ended', go);
   v.addEventListener('error', go);
   const p = v.play(); if (p && p.catch) p.catch(go);   /* autoplay blocked */
-  /* safety net: if the video stalls, never hold the page longer than ~8s */
-  setTimeout(go, 8000);
+  /* safety nets: once playing, allow the rest of the clip + 2s;
+     and never hold the page longer than 15s even on a very slow connection */
+  let t = null;
+  const arm = () => {
+    clearTimeout(t);
+    const left = isFinite(v.duration) && v.duration ? (v.duration - v.currentTime) * 1000 : 7000;
+    t = setTimeout(go, left + 2000);
+  };
+  if (!v.paused && v.readyState >= 3) arm();
+  v.addEventListener('playing', arm);
+  setTimeout(go, 15000);
 }
 
 function fallback(err) {
