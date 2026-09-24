@@ -3575,15 +3575,12 @@ function afterLogoVideo(cb) {
   let fired = false;
   const go = () => { if (fired) return; fired = true; if (v) v.pause(); cb(); };
   if (skip) skip.addEventListener('click', go);
-  /* returning visitors already saw the intro — don't make them wait again */
-  let seen = false;
-  try { seen = localStorage.getItem('wc_intro_seen') === '1'; localStorage.setItem('wc_intro_seen', '1'); } catch (e) {}
-  if (!v || REDUCE || seen || v.ended || v.error) return go();
+  if (!v || REDUCE || v.ended || v.error) return go();
   v.addEventListener('ended', go);
   v.addEventListener('error', go);
   const p = v.play(); if (p && p.catch) p.catch(go);   /* autoplay blocked */
-  const left = isFinite(v.duration) && v.duration ? (v.duration - v.currentTime) * 1000 : 5000;
-  setTimeout(go, Math.min(left + 800, 6000));          /* safety net: never hold longer than 6s */
+  /* safety net: if the video stalls, never hold the page longer than ~8s */
+  setTimeout(go, 8000);
 }
 
 function fallback(err) {

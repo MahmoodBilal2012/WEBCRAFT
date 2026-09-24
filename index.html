@@ -922,10 +922,14 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
 .brand-tx b{letter-spacing:.22em !important}.brand-tx i{letter-spacing:.16em !important}
 .pre-mark{width:min(340px,76vw)!important;height:auto!important;margin:0 auto 20px!important;padding:10px 14px;background:rgba(255,255,255,.97);border-radius:14px;box-shadow:0 24px 70px rgba(0,0,0,.35);opacity:1!important}
 .pre-mark img{display:block;width:100%;height:auto;max-height:120px;object-fit:contain}
-.pre-mark:has(video){width:min(520px,88vw)!important;padding:0;overflow:hidden}
-.pre-mark video{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:#f2f2f2}
-.pre-skip{margin-top:14px;background:none;border:0;color:inherit;opacity:.6;font:inherit;font-size:11px;letter-spacing:.2em;cursor:pointer}
-.pre-skip:hover{opacity:1}.pre-name{margin-bottom:18px;font-size:13px;letter-spacing:.25em;text-transform:uppercase;color:var(--bone-dim)}
+/* full-screen logo intro */
+#pre{background:#e9e9e9!important}
+#pre .pre-in{width:auto!important}
+#pre .pre-name,#pre .pre-bar,#pre .pre-meta{display:none!important}
+.pre-mark:has(video){position:fixed!important;inset:0;width:100vw!important;height:100vh!important;height:100dvh!important;margin:0!important;padding:0!important;border-radius:0!important;box-shadow:none!important;background:#e9e9e9!important;overflow:hidden}
+.pre-mark video{display:block;width:100%;height:100%;object-fit:contain;background:#e9e9e9}
+.pre-skip{position:fixed;right:clamp(16px,3vw,40px);bottom:clamp(16px,3vw,40px);z-index:2;padding:10px 18px;border:1px solid rgba(0,0,0,.18);border-radius:999px;background:rgba(255,255,255,.7);color:#222;font:inherit;font-size:11px;letter-spacing:.2em;cursor:pointer;opacity:.75;transition:opacity .2s}
+.pre-skip:hover,.pre-skip:focus-visible{opacity:1}.pre-name{margin-bottom:18px;font-size:13px;letter-spacing:.25em;text-transform:uppercase;color:var(--bone-dim)}
 .sec-head .k b,.chip .num{display:none!important}.chip{gap:0!important}.chip .tx{padding-left:0!important}
 .service-card .card-lab b{letter-spacing:.08em!important}
 .skill-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 30px;border-top:1px solid var(--line-soft);margin-top:30px}
