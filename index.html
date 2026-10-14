@@ -1064,17 +1064,36 @@ body[data-layout-footer="b"] .foot-brand{ grid-template-columns:minmax(0,1fr) !i
 .ring-art--tech{background:#111318;color:#f3f0e8;padding:24px}.ring-tech-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:25px 25px;mask-image:linear-gradient(180deg,#000,transparent)}.ring-art--tech>b{position:relative;font-size:10px;letter-spacing:.22em}.ring-art--tech>strong{position:absolute;left:23px;top:94px;font-size:clamp(31px,4vw,48px);line-height:.97;letter-spacing:-.07em;font-weight:400}.ring-art--tech>strong span{color:#ff7256}.ring-art--tech>small{position:absolute;left:24px;bottom:28px;font-size:7px;letter-spacing:.16em;color:#a2a6b0}.ring-art--tech>i{position:absolute;right:22px;bottom:22px;font-style:normal;font-size:25px;color:#ff7256}
 .ring-hint{position:absolute;left:50%;bottom:5px;transform:translateX(-50%);display:flex;align-items:center;gap:12px;color:rgba(223,231,224,.36);font-size:8px;letter-spacing:.17em;white-space:nowrap;pointer-events:none}.ring-hint i{width:30px;height:1px;background:var(--ember);opacity:.75}
 .ring-footer{display:flex;align-items:center;gap:18px;margin-top:14px;color:var(--muted);font-size:9px;letter-spacing:.15em}.ring-progress{height:1px;background:var(--line);flex:1;overflow:hidden}.ring-progress i{display:block;width:16.666%;height:100%;background:var(--ember);transition:width .35s}.ring-footer>span:last-child{text-align:right}
-.nav-link,.signature-email,.cbtn{position:relative;isolation:isolate;overflow:hidden}
-.nav-link{border:1px solid transparent;border-radius:999px;padding:9px 14px;transition:background .3s,border-color .3s,color .3s}
-.nav-link:hover,.nav-link:focus-visible{background:rgba(223,231,224,.08);border-color:var(--line);color:var(--bone)}
-.nav-link:focus-visible,.cbtn:focus-visible,.signature-email:focus-visible{outline:1px solid var(--ember);outline-offset:3px}
-.cbtn,.signature-email{border-radius:999px;transition:border-color .3s,background .3s,transform .3s}
-.cbtn:hover,.signature-email:hover{transform:translateY(-2px);border-color:rgba(255,90,60,.55)}
-.cbtn::after,.signature-email::after{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,.08) 48%,transparent 76%);transform:translateX(-120%);transition:transform .7s var(--ease-out)}
-.cbtn:hover::after,.signature-email:hover::after{transform:translateX(120%)}
+/* Preserve WEBCRAFT's original navbar link styling. Animate only the contact CTAs. */
+.cbtn{position:relative;isolation:isolate;overflow:hidden}
+.cbtn>*{position:relative;z-index:1}
+.cbtn::before{content:"";position:absolute;z-index:0;inset:0;transform:scaleX(0);transform-origin:left center;transition:transform .62s var(--ease-out);pointer-events:none}
+.cbtn--mail::before{background:linear-gradient(110deg,#dfe7e0,#f5f7f4)}
+.cbtn--wa::before{background:linear-gradient(110deg,#117b59,#24a477)}
+.cbtn--mail:hover,.cbtn--mail:focus-visible{color:#05070a;border-color:rgba(223,231,224,.85)}
+.cbtn--wa:hover,.cbtn--wa:focus-visible{color:#fff;border-color:rgba(36,164,119,.9)}
+.cbtn:hover::before,.cbtn:focus-visible::before{transform:scaleX(1)}
+.cbtn--mail:hover .cbtn-tx small,.cbtn--mail:hover .cbtn-go,.cbtn--mail:focus-visible .cbtn-tx small,.cbtn--mail:focus-visible .cbtn-go{color:rgba(5,7,10,.65)}
+.cbtn--wa:hover .cbtn-tx small,.cbtn--wa:hover .cbtn-go,.cbtn--wa:focus-visible .cbtn-tx small,.cbtn--wa:focus-visible .cbtn-go{color:rgba(255,255,255,.78)}
+.signature-email{border-radius:999px;transition:border-color .3s,background .3s,transform .3s}
+.signature-email:hover{transform:translateY(-2px);border-color:rgba(255,90,60,.55)}
+.signature-email::after{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,.08) 48%,transparent 76%);transform:translateX(-120%);transition:transform .7s var(--ease-out)}
+.signature-email:hover::after{transform:translateX(120%)}
 @media(max-width:700px){.ring-heading{align-items:flex-start}.ring-heading p{max-width:38ch}.ring-stage{height:390px;perspective:950px}.ring-card{width:220px;height:300px}.ring-footer>span:last-child{display:none}.ring-hint{bottom:1px}}
 @media(max-width:480px){.ring-heading{gap:10px}.ring-heading h3{font-size:25px}.ring-controls{gap:5px}.ring-control{width:38px;height:38px}.ring-stage{height:360px}.ring-card{width:205px;height:278px}.ring-copy{left:15px;right:15px;bottom:16px}.ring-art--studio,.ring-art--hospitality,.ring-art--tech{padding:20px}.ring-art--hospitality>span{font-size:33px;top:145px}.ring-art--tech>strong{left:19px;font-size:34px}.ring-footer{gap:10px}}
 @media(prefers-reduced-motion:reduce){.ring-card,.ring-progress i,.ring-control{transition:none!important}}
+
+
+/* Correct 3D carousel geometry: keep the ring's front card at the stage plane
+   and let the carousel rotate as a single ring, rather than orbiting each card
+   independently around the camera. */
+.showcase-ring .ring-stage{perspective:1800px;perspective-origin:50% 48%;overflow:hidden}
+.showcase-ring .ring-track{position:absolute;left:50%;top:50%;inset:auto;width:0;height:0;transform-style:preserve-3d;will-change:transform}
+.showcase-ring .ring-card{left:0;top:0;transform-style:preserve-3d;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.showcase-ring .ring-card>img{width:100%;height:100%;max-width:none;user-select:none;-webkit-user-drag:none}
+@media(max-width:700px){.showcase-ring .ring-stage{perspective:1250px}}
+@media(max-width:480px){.showcase-ring .ring-stage{perspective:1100px}}
+@media(prefers-reduced-motion:reduce){.cbtn::before{transition:none}}
 
 </style>
 </head>
