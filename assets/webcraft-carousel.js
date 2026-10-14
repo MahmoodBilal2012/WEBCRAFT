@@ -56,7 +56,7 @@
       // Each card is placed once on the ring. The whole ring rotates, keeping
       // card spacing stable and making the left/right cards bend naturally.
       card.style.transform =
-        `translate(-50%, -50%) rotateY(${cardAngle}deg) translateZ(${radius}px) scale(${scale})`;
+        `translate(-50%, -50%) rotateY(${cardAngle}deg) translateZ(${radius}px) rotateX(-8deg) scale(${scale})`;
       card.style.opacity = String(0.26 + depth * 0.74);
       card.style.zIndex = String(Math.round(depth * 100));
       card.style.filter = `brightness(${0.58 + depth * 0.42})`;
