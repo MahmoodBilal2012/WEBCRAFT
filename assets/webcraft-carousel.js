@@ -1,131 +1,238 @@
-/* WEBCRAFT 3D showcase carousel — dependency-free interaction inspired by React Bits. */
+/* WEBCRAFT 3D carousel.
+   A dependency-free adaptation of the circular 3D layout pattern shown in
+   React Bits, adjusted for this site's static HTML/CSS/JS structure. */
 (() => {
+  'use strict';
+
   const stage = document.querySelector('[data-ring-stage]');
   const track = document.querySelector('[data-ring-track]');
   if (!stage || !track) return;
 
-  const cards = [...track.querySelectorAll('[data-ring-card]')];
-  const prev = document.querySelector('[data-ring-prev]');
+  const cards = Array.from(track.querySelectorAll('[data-ring-card]'));
+  const previous = document.querySelector('[data-ring-prev]');
   const next = document.querySelector('[data-ring-next]');
-  const count = document.querySelector('[data-ring-count]');
+  const counter = document.querySelector('[data-ring-count]');
   const progress = document.querySelector('[data-ring-progress]');
   if (!cards.length) return;
 
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let angle = 0;
-  let rotation = 360 / cards.length;
-  let radius = 420;
-  let active = 0;
-  let startX = 0;
-  let lastX = 0;
-  let pointerDown = false;
-  let moved = false;
-  let autoplay = null;
-  let lastFrame = 0;
+  const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+  const count = cards.length;
+  const stepAngle = 360 / count;
+  const autoplaySpeed = 12; // degrees per second
+  const gap = 25;
 
-  const wrap = (n, max) => ((n % max) + max) % max;
+  let angle = 0;
+  let radius = 0;
+  let activeIndex = 0;
+  let pointerDown = false;
+  let pointerMoved = false;
+  let pointerStartX = 0;
+  let pointerLastX = 0;
+  let pointerLastTime = 0;
+  let dragVelocity = 0;
+  let pressedCardIndex = -1;
+  let animationFrame = 0;
+  let autoFrame = 0;
+  let lastAutoFrame = 0;
+  let snapFrame = 0;
+
+  const wrapIndex = (value, length) => ((value % length) + length) % length;
+  const wrapDegrees = value => ((((value + 180) % 360) + 360) % 360) - 180;
+  const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+
+  function render() {
+    // The track sits one radius behind the camera. The front card is therefore
+    // at z=0 rather than directly in front of the camera, preventing huge cards.
+    track.style.transform = `translateZ(${-radius}px) rotateY(${angle}deg)`;
+
+    cards.forEach((card, index) => {
+      const cardAngle = index * stepAngle;
+      const currentAngle = cardAngle + angle;
+      const radians = currentAngle * Math.PI / 180;
+      const depth = (Math.cos(radians) + 1) / 2;
+      const scale = 0.94 + depth * 0.06;
+
+      // Each card is placed once on the ring. The whole ring rotates, keeping
+      // card spacing stable and making the left/right cards bend naturally.
+      card.style.transform =
+        `translate(-50%, -50%) rotateY(${cardAngle}deg) translateZ(${radius}px) scale(${scale})`;
+      card.style.opacity = String(0.26 + depth * 0.74);
+      card.style.zIndex = String(Math.round(depth * 100));
+      card.style.filter = `brightness(${0.58 + depth * 0.42})`;
+      card.style.pointerEvents = depth > 0.08 ? 'auto' : 'none';
+      card.setAttribute('aria-current', Math.abs(wrapDegrees(currentAngle)) < stepAngle / 2 ? 'true' : 'false');
+    });
+
+    activeIndex = wrapIndex(Math.round(-angle / stepAngle), count);
+    if (counter) counter.textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(count).padStart(2, '0')}`;
+    if (progress) progress.style.width = `${((activeIndex + 1) / count) * 100}%`;
+  }
 
   function measure() {
-    const card = cards[0].getBoundingClientRect();
-    const width = Math.max(280, stage.clientWidth);
-    rotation = 360 / cards.length;
-    radius = Math.max(card.width * 0.9, Math.min(width * 0.57, 470));
-    layout();
+    const cardWidth = cards[0].offsetWidth || 220;
+    const idealRadius = (cardWidth + gap) / (2 * Math.sin(Math.PI / count));
+    const stageWidth = stage.clientWidth || window.innerWidth;
+    radius = Math.max(cardWidth * 0.65, Math.min(idealRadius, stageWidth * 0.6));
+    render();
   }
 
-  function layout() {
-    cards.forEach((card, index) => {
-      const a = index * rotation + angle;
-      const rad = a * Math.PI / 180;
-      const depth = (Math.cos(rad) + 1) / 2;
-      const focused = Math.abs((((a + 180) % 360) + 360) % 360 - 180) < rotation / 2;
-      card.style.transform = `translate(-50%,-50%) rotateY(${a}deg) translateZ(${radius}px) scale(${0.82 + depth * 0.18})`;
-      card.style.opacity = String(0.28 + depth * 0.72);
-      card.style.zIndex = String(Math.round(depth * 100));
-      card.style.filter = `brightness(${0.55 + depth * 0.45})`;
-      card.style.pointerEvents = depth > 0.12 ? 'auto' : 'none';
-      card.setAttribute('aria-current', focused ? 'true' : 'false');
-    });
-    active = wrap(Math.round(-angle / rotation), cards.length);
-    if (count) count.textContent = `${String(active + 1).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}`;
-    if (progress) progress.style.width = `${((active + 1) / cards.length) * 100}%`;
+  function cancelSnap() {
+    if (snapFrame) cancelAnimationFrame(snapFrame);
+    snapFrame = 0;
   }
 
-  function rotateBy(step) {
-    angle -= step * rotation;
-    layout();
+  function animateTo(targetAngle, duration = 420) {
+    cancelSnap();
+    const from = angle;
+    const delta = targetAngle - from;
+    if (prefersReducedMotion || duration <= 0 || Math.abs(delta) < 0.01) {
+      angle = targetAngle;
+      render();
+      return;
+    }
+    const start = performance.now();
+    const animate = now => {
+      const t = Math.min(1, (now - start) / duration);
+      angle = from + delta * easeOutCubic(t);
+      render();
+      if (t < 1) snapFrame = requestAnimationFrame(animate);
+      else snapFrame = 0;
+    };
+    snapFrame = requestAnimationFrame(animate);
+  }
+
+  function rotateBy(steps) {
+    animateTo(angle - steps * stepAngle);
+  }
+
+  function goToCard(index) {
+    const difference = wrapIndex(index - activeIndex, count);
+    const shortest = difference > count / 2 ? difference - count : difference;
+    rotateBy(shortest);
+  }
+
+  function stopAutoplay() {
+    if (autoFrame) cancelAnimationFrame(autoFrame);
+    autoFrame = 0;
+    lastAutoFrame = 0;
+  }
+
+  function autoplayTick(now) {
+    if (!lastAutoFrame) lastAutoFrame = now;
+    const deltaSeconds = Math.min((now - lastAutoFrame) / 1000, 0.05);
+    lastAutoFrame = now;
+
+    const shouldPause =
+      document.hidden ||
+      pointerDown ||
+      stage.matches(':hover') ||
+      stage.contains(document.activeElement);
+
+    if (!shouldPause && !prefersReducedMotion) {
+      angle -= autoplaySpeed * deltaSeconds;
+      render();
+    }
+    autoFrame = requestAnimationFrame(autoplayTick);
   }
 
   function startAutoplay() {
     stopAutoplay();
-    if (reduceMotion || document.hidden) return;
-    autoplay = window.setInterval(() => {
-      if (!pointerDown && !stage.matches(':hover') && !stage.contains(document.activeElement)) rotateBy(1);
-    }, 3600);
-  }
-  function stopAutoplay() {
-    if (autoplay) window.clearInterval(autoplay);
-    autoplay = null;
+    if (prefersReducedMotion || document.hidden) return;
+    autoFrame = requestAnimationFrame(autoplayTick);
   }
 
-  prev?.addEventListener('click', () => { rotateBy(-1); startAutoplay(); });
-  next?.addEventListener('click', () => { rotateBy(1); startAutoplay(); });
-  stage.addEventListener('pointerdown', (event) => {
+  previous?.addEventListener('click', () => rotateBy(-1));
+  next?.addEventListener('click', () => rotateBy(1));
+
+  stage.addEventListener('dragstart', event => event.preventDefault());
+
+  stage.addEventListener('pointerdown', event => {
     if (event.pointerType === 'mouse' && event.button !== 0) return;
+    cancelSnap();
     pointerDown = true;
-    moved = false;
-    startX = lastX = event.clientX;
-    stage.setPointerCapture?.(event.pointerId);
+    pointerMoved = false;
+    pointerStartX = event.clientX;
+    pointerLastX = event.clientX;
+    pointerLastTime = event.timeStamp;
+    dragVelocity = 0;
+    pressedCardIndex = cards.indexOf(event.target.closest?.('[data-ring-card]'));
     stopAutoplay();
+    try {
+      stage.setPointerCapture(event.pointerId);
+    } catch {
+      // Pointer capture may be unavailable for synthetic events; dragging still works.
+    }
+    if (event.target instanceof HTMLImageElement) event.preventDefault();
   });
-  stage.addEventListener('pointermove', (event) => {
+
+  stage.addEventListener('pointermove', event => {
     if (!pointerDown) return;
-    const dx = event.clientX - lastX;
-    if (Math.abs(event.clientX - startX) > 5) moved = true;
+    const dx = event.clientX - pointerLastX;
+    const elapsed = Math.max(1, event.timeStamp - pointerLastTime);
+    if (Math.abs(event.clientX - pointerStartX) > 5) pointerMoved = true;
     angle += dx * 0.22;
-    lastX = event.clientX;
-    layout();
+    dragVelocity = (dx * 0.22) / elapsed;
+    pointerLastX = event.clientX;
+    pointerLastTime = event.timeStamp;
+    render();
   });
-  function finishDrag() {
+
+  function finishPointer(event) {
     if (!pointerDown) return;
     pointerDown = false;
-    if (moved) {
-      const snapped = Math.round(angle / rotation) * rotation;
-      const from = angle;
-      const start = performance.now();
-      const duration = reduceMotion ? 0 : 180;
-      function snap(now) {
-        const t = duration ? Math.min(1, (now - start) / duration) : 1;
-        const eased = 1 - Math.pow(1 - t, 3);
-        angle = from + (snapped - from) * eased;
-        layout();
-        if (t < 1) requestAnimationFrame(snap);
-      }
-      requestAnimationFrame(snap);
+    const isNormalRelease = event.type === 'pointerup';
+
+    if (pointerMoved) {
+      // A short momentum projection gives a quick swipe a little follow-through,
+      // then snapping brings a card back to the central focus position.
+      const projectedAngle = angle + Math.max(-80, Math.min(80, dragVelocity * 150 * 0.6));
+      animateTo(Math.round(projectedAngle / stepAngle) * stepAngle, 240);
+    } else if (isNormalRelease && pressedCardIndex >= 0) {
+      goToCard(pressedCardIndex);
     }
+
+    pressedCardIndex = -1;
     startAutoplay();
   }
-  stage.addEventListener('pointerup', finishDrag);
-  stage.addEventListener('pointercancel', finishDrag);
-  stage.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowLeft') { event.preventDefault(); rotateBy(-1); startAutoplay(); }
-    if (event.key === 'ArrowRight') { event.preventDefault(); rotateBy(1); startAutoplay(); }
-    if (event.key === 'Home') { event.preventDefault(); angle = 0; layout(); }
+
+  stage.addEventListener('pointerup', finishPointer);
+  stage.addEventListener('pointercancel', finishPointer);
+  stage.addEventListener('lostpointercapture', event => {
+    if (pointerDown) finishPointer(event);
   });
+
+  // Keyboard users can focus a card and use the arrow keys to rotate the ring.
   cards.forEach((card, index) => {
-    card.addEventListener('click', () => {
-      if (moved) { moved = false; return; }
-      const diff = wrap(index - active, cards.length);
-      rotateBy(diff > cards.length / 2 ? diff - cards.length : diff);
-    });
-    card.addEventListener('focus', () => {
-      const diff = wrap(index - active, cards.length);
-      if (diff) rotateBy(diff > cards.length / 2 ? diff - cards.length : diff);
+    card.addEventListener('click', event => {
+      if (event.detail === 0) goToCard(index);
     });
   });
-  document.addEventListener('visibilitychange', () => document.hidden ? stopAutoplay() : startAutoplay());
-  if ('ResizeObserver' in window) new ResizeObserver(measure).observe(stage);
-  else window.addEventListener('resize', measure, { passive: true });
+
+  stage.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      rotateBy(-1);
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      rotateBy(1);
+    } else if (event.key === 'Home') {
+      event.preventDefault();
+      animateTo(0);
+    }
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopAutoplay();
+    else startAutoplay();
+  });
+
+  if ('ResizeObserver' in window) {
+    const observer = new ResizeObserver(measure);
+    observer.observe(stage);
+  } else {
+    window.addEventListener('resize', measure, { passive: true });
+  }
+
   measure();
   startAutoplay();
 })();
