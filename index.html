@@ -1011,6 +1011,28 @@ body[data-layout-footer="b"] .foot-brand{ grid-template-columns:minmax(0,1fr) !i
 .foot-brand-mark .brand-tx b{ font-size:15px; letter-spacing:.24em !important; }
 .foot-brand-mark .brand-tx i{ font-size:9px; letter-spacing:.18em !important; }
 @media(max-width:820px){ .foot-brand-mark .webcraft-logo{ width:44px !important; height:44px !important; } }
+
+/* Signature footer inspired by the supplied reference; adapted to WEBCRAFT's warm, cinematic palette. */
+.signature-foot{position:relative;isolation:isolate;overflow:hidden;padding:clamp(34px,5vw,76px) clamp(22px,5.2vw,90px) 24px;background:#111110;color:var(--bone,#eee9df);border-top:1px solid rgba(238,233,223,.12)}
+.signature-foot .fg{opacity:.14;pointer-events:none}
+.signature-foot-top{position:relative;z-index:2;display:grid;grid-template-columns:minmax(250px,1.05fr) minmax(420px,1.4fr);gap:clamp(32px,7vw,120px);align-items:start}
+.signature-kicker{display:block;color:rgba(238,233,223,.5);font-size:10px;letter-spacing:.19em;text-transform:uppercase}
+.signature-news h2{max-width:420px;margin:18px 0 24px;font-size:clamp(22px,2.3vw,34px);font-weight:400;letter-spacing:-.045em;line-height:1.13}
+.signature-email{display:flex;align-items:center;justify-content:space-between;gap:20px;max-width:420px;padding:15px 17px;border:1px solid rgba(238,233,223,.18);border-radius:3px;color:rgba(238,233,223,.68);font-size:13px;text-decoration:none;transition:border-color .25s,color .25s}
+.signature-email span{color:#ff8e6c;font-size:18px}.signature-email:hover{border-color:rgba(255,142,108,.65);color:var(--bone,#eee9df)}
+.signature-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(18px,3vw,46px)}
+.signature-links h3{margin:0 0 20px;color:var(--bone,#eee9df);font-size:12px;font-weight:500}
+.signature-links a{display:block;width:fit-content;margin:0 0 13px;color:rgba(238,233,223,.48);font-size:13px;text-decoration:none;transition:color .2s}
+.signature-links a:hover{color:#ff9b7b}
+.signature-name{position:relative;z-index:1;display:block;width:max-content;max-width:100%;margin:clamp(46px,8vw,112px) 0 clamp(22px,3vw,38px);color:rgba(238,233,223,.075);font-family:"Pacifico","Brush Script MT",cursive;font-size:clamp(76px,19.3vw,300px);font-weight:400;letter-spacing:-.065em;line-height:.72;text-decoration:none;white-space:nowrap;transform:translateX(-.035em);transition:color .35s}
+.signature-name:hover{color:rgba(255,142,108,.12)}.signature-period{color:rgba(255,142,108,.22)}
+.signature-foot-base{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:18px;padding-top:22px;border-top:1px solid rgba(238,233,223,.13);color:rgba(238,233,223,.46);font-size:11px;letter-spacing:.035em}
+.signature-socials{display:flex;gap:9px}.signature-socials a{display:grid;width:36px;height:36px;place-items:center;border:1px solid rgba(238,233,223,.13);border-radius:50%;color:rgba(238,233,223,.75);font-size:11px;text-decoration:none;transition:background .2s,border-color .2s,color .2s}
+.signature-socials a:hover{background:#ff8e6c;border-color:#ff8e6c;color:#151311}
+@media (max-width:900px){.signature-foot-top{grid-template-columns:1fr;gap:42px}.signature-news h2{max-width:560px}.signature-links{max-width:700px}}
+@media (max-width:560px){.signature-foot{padding-inline:20px}.signature-links{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:25px}.signature-name{font-size:19vw;margin-top:58px;letter-spacing:-.07em}.signature-foot-base{align-items:flex-start;flex-wrap:wrap}.signature-foot-base>span:nth-child(2){display:none}.signature-socials{margin-left:auto}}
+@media (prefers-reduced-motion:reduce){.signature-foot *{transition:none!important}}
+
 </style>
 </head>
 <body data-layout-hero="b" data-layout-story="b" data-layout-gallery="b"
@@ -1208,44 +1230,29 @@ body[data-layout-footer="b"] .foot-brand{ grid-template-columns:minmax(0,1fr) !i
   </div>
 </section>
 
-<!-- ============================================================ footer -->
-<footer class="foot" data-cam="5">
-  <div class="fg" data-fg="foot" aria-hidden="true">
-    <span class="fg-el fg-bush" data-fg-in="up"><img src="secret-pathways-assets/foreground/png/garden-bush.webp" alt="" width="1717" height="876" loading="lazy" decoding="async"></span>
-    <span class="fg-el fg-grass" data-fg-in="up"><img src="secret-pathways-assets/foreground/png/tall-grass.webp" alt="" width="1717" height="916" loading="lazy" decoding="async"></span>
-    <span class="fg-el fg-stones" data-fg-in="up"><img src="secret-pathways-assets/foreground/png/basalt-stones.webp" alt="" width="1536" height="996" loading="lazy" decoding="async"></span>
-  </div>
-  <div class="foot-grid">
-    <div class="foot-brand">
-      <a class="brand foot-brand-mark" href="#top" data-cursor aria-label="WEBCRAFT home">
-        <span class="webcraft-logo" aria-hidden="true"></span>
-        <span class="brand-tx"><b>WEBCRAFT</b><i>MAHMOOD BILAL · DIGITAL STUDIO</i></span>
-      </a>
-      <p>WEBCRAFT is Mahmood Bilal’s digital studio — crafting landing pages, websites, 3D experiences, Python dashboards, automation and custom web pages.</p>
+<!-- ============================================================ signature footer -->
+<footer class="foot signature-foot" data-cam="5">
+  <div class="signature-foot-top">
+    <div class="signature-news">
+      <span class="signature-kicker">STAY IN THE LOOP</span>
+      <h2>Ideas, updates &amp; digital craft.</h2>
+      <a class="signature-email" href="mailto:mahmoodbilal204@gmail.com?subject=WEBCRAFT%20Updates">Get in touch for project updates <span aria-hidden="true">↗</span></a>
     </div>
-    <div><h4>Explore</h4><ul>
-      <li><a href="#top" data-cursor>Home</a></li>
-      <li><a href="#pathways" data-cursor>Services</a></li>
-      <li><a href="#lessons" data-cursor>Skills</a></li>
-      <li><a href="#eternity" data-cursor>Contact</a></li>
-    </ul></div>
-    <div><h4>What I Serve</h4><ul>
-      <li><a href="#pathways" data-cursor>Landing Pages</a></li>
-      <li><a href="#pathways" data-cursor>Websites & Webpages</a></li>
-      <li><a href="#pathways" data-cursor>Python Dashboards</a></li>
-      <li><a href="#pathways" data-cursor>3D / WebGL</a></li>
-    </ul></div>
-    <div class="footer-contact"><h4>Direct Contact</h4><ul>
-      <li><a href="mailto:mahmoodbilal204@gmail.com" data-cursor>mahmoodbilal204@gmail.com</a></li>
-      <li><a href="https://wa.me/923114872224?text=Hi%20Mahmood%2C%20I%27d%20like%20to%20discuss%20a%20WEBCRAFT%20project." target="_blank" rel="noopener noreferrer" data-cursor>WhatsApp · +92 311 4872224</a></li>
-      <li><a href="#lessons" data-cursor>Certificates</a></li>
-      <li><a href="#eternity" data-cursor>Founder & Owner</a></li>
-    </ul></div>
+    <nav class="signature-links" aria-label="Footer navigation">
+      <div><h3>Explore</h3><a href="#top">Home</a><a href="#pathways">Services</a><a href="#lessons">Skills &amp; certificates</a><a href="#eternity">Contact</a></div>
+      <div><h3>Connect</h3><a href="mailto:mahmoodbilal204@gmail.com">Email me</a><a href="https://github.com/MahmoodBilal2012" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://wa.me/923114872224" target="_blank" rel="noopener noreferrer">WhatsApp</a></div>
+      <div><h3>What I build</h3><a href="#pathways">Websites &amp; landing pages</a><a href="#pathways">Python dashboards</a><a href="#pathways">3D / WebGL experiences</a><a href="#pathways">Automation</a></div>
+    </nav>
   </div>
-  <div class="foot-base">
-    <span>© 2026 WEBCRAFT · MAHMOOD BILAL</span>
-    <span>DIGITAL STUDIO</span>
-    <span>WEB · 3D · PYTHON · AUTOMATION</span>
+  <a class="signature-name" href="#top" aria-label="Mahmood Bilal — back to top">Mahmood Bilal<span class="signature-period">.</span></a>
+  <div class="signature-foot-base">
+    <span>© 2026 WEBCRAFT · Built by Mahmood Bilal</span>
+    <span>DESIGN · CODE · EXPERIENCE</span>
+    <div class="signature-socials" aria-label="Social links">
+      <a href="https://github.com/MahmoodBilal2012" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GH</a>
+      <a href="mailto:mahmoodbilal204@gmail.com" aria-label="Email">✉</a>
+      <a href="#top" aria-label="Back to top">↑</a>
+    </div>
   </div>
 </footer>
 
