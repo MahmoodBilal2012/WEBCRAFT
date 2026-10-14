@@ -73,7 +73,8 @@
     const cardWidth = cards[0].offsetWidth || 220;
     const idealRadius = (cardWidth + gap) / (2 * Math.sin(Math.PI / count));
     const stageWidth = stage.clientWidth || window.innerWidth;
-    radius = Math.max(cardWidth * 0.65, Math.min(idealRadius, stageWidth * 0.6));
+    const maxRadius = stageWidth < 560 ? stageWidth * 0.38 : stageWidth * 0.62;
+    radius = Math.max(cardWidth * (stageWidth < 560 ? 0.44 : 0.58), Math.min(idealRadius, maxRadius));
     render();
   }
 
