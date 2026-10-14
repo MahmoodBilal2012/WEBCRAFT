@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; media-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://images.unsplash.com; font-src 'self' data:; connect-src 'self'; media-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <meta name="referrer" content="no-referrer">
 <title> WEBCRAFT — WE CRAFT YOUR WEB </title>
 <meta name="description" content="WEBCRAFT is the digital studio of Mahmood Bilal — landing pages, websites, 3D web experiences, Python dashboards, automation and custom 404 pages.">
@@ -1095,6 +1095,50 @@ body[data-layout-footer="b"] .foot-brand{ grid-template-columns:minmax(0,1fr) !i
 @media(max-width:480px){.showcase-ring .ring-stage{perspective:1100px}}
 @media(prefers-reduced-motion:reduce){.cbtn::before{transition:none}}
 
+
+/* Embedded carousel: it replaces the three old service images in-place. */
+.showcase-ring--embedded{margin:clamp(24px,3vw,42px) 0 4px;padding:0;border:0}
+.ring-toolbar{display:flex;justify-content:space-between;align-items:center;gap:18px;margin:0 0 12px;color:var(--muted);font-size:9px;letter-spacing:.18em}
+.ring-toolbar-kicker{color:var(--bone-dim)}.ring-toolbar-kicker i{font-style:normal;color:var(--ember);padding:0 6px}
+.ring-toolbar-note{opacity:.68;text-align:right}
+.ring-stage{height:clamp(370px,37vw,470px);perspective:1600px;perspective-origin:50% 48%;overflow:hidden;touch-action:pan-y;outline:none;user-select:none;-webkit-user-select:none}
+.ring-stage:focus-visible{outline:1px solid var(--ember);outline-offset:5px;border-radius:18px}
+.ring-track{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d;will-change:transform}
+.ring-card{position:absolute;left:0;top:0;width:clamp(230px,24vw,320px);height:clamp(300px,31vw,395px);overflow:hidden;border:1px solid rgba(223,231,224,.2);border-radius:13px;background:#11161a;box-shadow:0 24px 65px rgba(0,0,0,.42);transform-style:preserve-3d;backface-visibility:hidden;-webkit-backface-visibility:hidden;cursor:grab;outline:none;transition:border-color .35s,box-shadow .35s}
+.ring-card:active{cursor:grabbing}.ring-card:focus-visible{border-color:var(--ember)}
+.ring-card>img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;filter:saturate(.82) brightness(.8);pointer-events:none;user-select:none;-webkit-user-drag:none;transition:transform .8s var(--ease-out),filter .8s}
+.ring-card:hover>img{transform:scale(1.035);filter:saturate(1) brightness(.9)}
+.ring-tint{position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,7,9,.52) 0%,rgba(4,7,9,.12) 35%,rgba(4,7,9,.89) 100%);pointer-events:none}
+.ring-tint--light{background:linear-gradient(180deg,rgba(242,238,229,.16),rgba(242,238,229,.02) 40%,rgba(242,238,229,.86) 100%)}
+.ring-tint--violet{background:linear-gradient(135deg,rgba(5,6,15,.72),rgba(22,9,55,.34) 48%,rgba(5,6,15,.92))}
+.ring-tint--portrait{background:linear-gradient(180deg,rgba(0,0,0,.53),rgba(0,0,0,.02) 38%,rgba(0,0,0,.9))}
+.ring-tint--travel{background:linear-gradient(180deg,rgba(4,15,22,.54),rgba(4,15,22,.06) 38%,rgba(4,15,22,.88))}
+.ring-tint--analytics{background:linear-gradient(160deg,rgba(4,10,20,.75),rgba(4,10,20,.26) 48%,rgba(4,10,20,.96))}
+.mockup-nav{position:absolute;left:17px;right:17px;top:17px;display:flex;align-items:center;justify-content:space-between;gap:8px;color:#f2f3f6;font-size:8px;letter-spacing:.11em;white-space:nowrap}
+.mockup-nav b{font-weight:600;letter-spacing:.14em;font-size:9px}
+.mockup-nav>span{font-size:6px;letter-spacing:.08em;opacity:.8}
+.mockup-nav--dark{color:#20211f}
+.mockup-dot{color:#9c7cff}
+.mockup-body{position:absolute;left:18px;right:17px;top:32%;color:#f7f8fa;pointer-events:none}
+.mockup-body small{display:block;margin-bottom:11px;font-size:7px;letter-spacing:.17em;font-weight:600;opacity:.78}
+.mockup-body strong{display:block;font-size:clamp(24px,2.45vw,34px);line-height:.96;letter-spacing:-.055em;font-weight:400;text-shadow:0 2px 15px rgba(0,0,0,.24)}
+.mockup-body p{max-width:26ch;margin:12px 0 15px;font-size:9px;line-height:1.5;color:rgba(247,248,250,.77)}
+.mockup-cta{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.56);border-radius:999px;padding:8px 10px;font-size:7px;letter-spacing:.03em;color:#fff;background:rgba(0,0,0,.13);backdrop-filter:blur(8px)}
+.mockup-cta--dark{color:#20211f;border-color:rgba(32,33,31,.5);background:rgba(255,255,255,.2)}
+.mockup-cta--violet{background:#6d4bff;border-color:#6d4bff}
+.mockup-cta--blue{background:#2587ee;border-color:#2587ee}
+.mockup-body--light{color:#20211f}.mockup-body--light strong{text-shadow:none}.mockup-body--light p{color:rgba(32,33,31,.76)}
+.mockup-foot{position:absolute;left:17px;right:17px;bottom:15px;display:flex;justify-content:space-between;gap:10px;color:rgba(246,247,249,.6);font-size:6px;letter-spacing:.12em}
+.mockup-foot--dark{color:rgba(32,33,31,.65)}
+.ring-control--stage{position:absolute;z-index:180;top:50%;transform:translateY(-50%);width:38px;height:38px;border:1px solid rgba(223,231,224,.18);background:rgba(5,7,10,.65);backdrop-filter:blur(10px);font-size:27px;font-weight:300;line-height:1}
+.ring-control--stage:hover{transform:translateY(calc(-50% - 2px));background:var(--bone);color:var(--ink);border-color:var(--bone)}
+.ring-control--prev{left:8px}.ring-control--next{right:8px}
+.ring-hint{bottom:4px}
+.ring-footer{margin-top:12px}
+@media(max-width:700px){.showcase-ring--embedded{margin-top:28px}.ring-stage{height:390px;perspective:1250px}.ring-card{width:245px;height:320px}.ring-control--stage{width:34px;height:34px}.ring-control--prev{left:4px}.ring-control--next{right:4px}}
+@media(max-width:480px){.ring-toolbar{align-items:flex-start;font-size:8px}.ring-toolbar-note{max-width:130px}.ring-stage{height:360px;perspective:1100px}.ring-card{width:220px;height:290px}.mockup-nav{left:13px;right:13px;top:13px}.mockup-body{left:14px;right:13px}.mockup-body strong{font-size:27px}.ring-hint{font-size:7px;gap:8px}.ring-footer{gap:10px}.ring-footer>span:last-child{display:none}}
+@media(prefers-reduced-motion:reduce){.ring-card,.ring-card>img,.ring-progress i,.ring-control{transition:none!important}}
+
 </style>
 </head>
 <body data-layout-hero="b" data-layout-story="b" data-layout-gallery="b"
@@ -1199,48 +1243,65 @@ body[data-layout-footer="b"] .foot-brand{ grid-template-columns:minmax(0,1fr) !i
     <h2 class="display h-sec" data-rv="up">Digital builds with a premium visual language.</h2>
     <p class="body-lg" data-rv="up">WEBCRAFT turns ideas into responsive, interactive and technically solid web products — with direct communication from the person building them.</p>
   </div>
-  <div class="cards" id="cards">
-    <article class="card service-card" data-rv="up" data-view="0" data-cursor>
-      <div class="card-fr" data-frame><img class="card-shot" src="assets/card-landing.webp" alt="Dark-themed landing page built by WEBCRAFT" loading="lazy" decoding="async"><i class="glow" style="--gx:80.2%;--gy:23.9%;--gr:22%;--gt:6.1s;--gt2:9.7s;--gc1:rgba(255,142,108,.50);--gc2:rgba(212,56,38,.24)"></i><div class="card-lab"><b>Landing Pages</b><span>BUILD</span></div></div>
-      <div class="card-meta"><span>Focused, responsive, custom-built</span><span>WEB</span></div>
-    </article>
-    <article class="card service-card" data-rv="up" data-view="1" data-cursor>
-      <div class="card-fr" data-frame><img class="card-shot" src="assets/card-websites.webp" alt="Business website and portfolio pages built by WEBCRAFT" loading="lazy" decoding="async"><i class="glow glow--flame" style="--gx:70.5%;--gy:47.2%;--gr:14%;--gt:3.7s;--gt2:5.3s;--gc1:rgba(255,198,124,.62);--gc2:rgba(226,118,40,.30)"></i><div class="card-lab"><b>Websites & Webpages</b><span>UI</span></div></div>
-      <div class="card-meta"><span>Business sites, portfolios and custom pages</span><span>DESIGN</span></div>
-    </article>
-    <article class="card service-card" data-rv="up" data-view="2" data-cursor>
-      <div class="card-fr" data-frame><img class="card-shot" src="assets/card-python.webp" alt="Python analytics dashboard built by WEBCRAFT" loading="lazy" decoding="async"><i class="glow" style="--gx:48%;--gy:16.8%;--gr:20%;--gt:7.3s;--gt2:11.2s;--gc1:rgba(255,138,104,.52);--gc2:rgba(208,54,36,.24)"></i><div class="card-lab"><b>Python & Dashboards</b><span>CODE</span></div></div>
-      <div class="card-meta"><span>Dashboards, automation and custom tooling</span><span>PYTHON</span></div>
-    </article>
-  </div>
-  <div class="hero-cue" style="justify-content:flex-start;margin-top:26px" data-rv="fade"><span>Also available: 3D / WebGL experiences · custom 404 pages</span></div>
-  <section class="showcase-ring" id="showcase" aria-labelledby="showcase-title">
-    <div class="ring-heading"><div><span class="k">SELECTED DIRECTIONS</span><h3 id="showcase-title">A few ways WEBCRAFT can look.</h3><p>Distinct visual directions for modern brands, products and digital experiences.</p></div><div class="ring-controls"><button type="button" class="ring-control" data-ring-prev aria-label="Previous design">←</button><button type="button" class="ring-control" data-ring-next aria-label="Next design">→</button></div></div>
+  
+  <div class="showcase-ring showcase-ring--embedded" id="showcase" aria-label="WEBCRAFT featured website concepts">
+    <div class="ring-toolbar">
+      <span class="ring-toolbar-kicker">WEBCRAFT <i>/</i> SELECTED CONCEPTS</span>
+      <span class="ring-toolbar-note">DRAG TO EXPLORE · 3D SHOWCASE</span>
+    </div>
     <div class="ring-stage" data-ring-stage tabindex="0" aria-label="Rotating website design carousel. Drag or use arrow keys to explore.">
+      <button type="button" class="ring-control ring-control--stage ring-control--prev" data-ring-prev aria-label="Previous design">‹</button>
       <div class="ring-track" data-ring-track>
-        <article class="ring-card ring-card--commerce" data-ring-card tabindex="0" aria-label="Editorial commerce website concept">
-          <img src="assets/card-websites.webp" alt="Premium website design concept" loading="lazy" decoding="async"><div class="ring-shade"></div><div class="ring-copy"><span>01 / COMMERCE</span><b>Made to<br>make a mark.</b><small>Editorial storefront · Art direction</small></div><div class="ring-ui ring-ui--commerce"><i></i><i></i><i></i></div>
+        <article class="ring-card ring-card--automotive" data-ring-card tabindex="0" aria-label="Automotive website concept">
+          <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=85" alt="Performance car for a premium automotive website design" loading="lazy" decoding="async">
+          <div class="ring-tint"></div>
+          <div class="mockup-nav"><b>MONARCH</b><span>STUDIO　 FLEET　 CONTACT</span></div>
+          <div class="mockup-body"><small>BUILT FOR THE DRIVE</small><strong>Own the<br>open road.</strong><p>Precision, performance and a sharper way forward.</p><span class="mockup-cta">Explore collection ↗</span></div>
+          <div class="mockup-foot"><span>MONARCH AUTOMOTIVE</span><span>01 / 06</span></div>
         </article>
-        <article class="ring-card ring-card--saas" data-ring-card tabindex="0" aria-label="SaaS product website concept">
-          <img src="assets/card-landing.webp" alt="Dark premium landing page concept" loading="lazy" decoding="async"><div class="ring-shade"></div><div class="ring-copy"><span>02 / SAAS</span><b>Complex ideas.<br>Clear product.</b><small>Product landing page · Conversion</small></div><div class="ring-ui ring-ui--saas"><span>PRODUCT / 01</span><strong>Less noise.<br>More signal.</strong><div class="ring-bars"><i></i><i></i><i></i><i></i></div></div>
+        <article class="ring-card ring-card--interiors" data-ring-card tabindex="0" aria-label="Architecture and interiors website concept">
+          <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=85" alt="Warm modern interior for an architecture and interiors website" loading="lazy" decoding="async">
+          <div class="ring-tint ring-tint--light"></div>
+          <div class="mockup-nav mockup-nav--dark"><b>ATELIER / 09</b><span>WORK　 STUDIO　 JOURNAL</span></div>
+          <div class="mockup-body mockup-body--light"><small>SPACES WITH SOUL</small><strong>Calm is<br>a luxury.</strong><p>Considered interiors, made for the way you live.</p><span class="mockup-cta mockup-cta--dark">Discover our work ↗</span></div>
+          <div class="mockup-foot mockup-foot--dark"><span>RESIDENTIAL · HOSPITALITY</span><span>02 / 06</span></div>
         </article>
-        <article class="ring-card ring-card--dashboard" data-ring-card tabindex="0" aria-label="Analytics dashboard concept">
-          <img src="assets/card-python.webp" alt="Python analytics dashboard concept" loading="lazy" decoding="async"><div class="ring-shade"></div><div class="ring-copy"><span>03 / ANALYTICS</span><b>Data with<br>direction.</b><small>Python dashboards · Automation</small></div><div class="ring-ui ring-ui--dashboard"><span>OVERVIEW <i>● LIVE</i></span><strong>84.6%</strong><small>Operational efficiency</small><div class="ring-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <article class="ring-card ring-card--ai" data-ring-card tabindex="0" aria-label="AI and SaaS website concept">
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=85" alt="Advanced technology detail for an AI SaaS website design" loading="lazy" decoding="async">
+          <div class="ring-tint ring-tint--violet"></div>
+          <div class="mockup-nav"><b>NEXORA<span class="mockup-dot">.</span></b><span>PLATFORM　 SOLUTIONS</span></div>
+          <div class="mockup-body"><small>INTELLIGENCE, IN MOTION</small><strong>Build beyond<br>limits.</strong><p>Powerful tools for teams ready to move faster.</p><span class="mockup-cta mockup-cta--violet">Explore platform ↗</span></div>
+          <div class="mockup-foot"><span>AI SYSTEMS · AUTOMATION</span><span>03 / 06</span></div>
         </article>
-        <article class="ring-card ring-card--studio" data-ring-card tabindex="0" aria-label="Creative studio website concept">
-          <div class="ring-art ring-art--studio"><span>FORM<br>FOLLOWS<br><em>feeling.</em></span><i></i><b>STUDIO / 2026</b></div><div class="ring-copy"><span>04 / CREATIVE</span><b>Make the<br>ordinary rare.</b><small>Creative studio · Portfolio</small></div>
+        <article class="ring-card ring-card--creative" data-ring-card tabindex="0" aria-label="Creative agency website concept">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=85" alt="Editorial portrait for a creative studio website design" loading="lazy" decoding="async">
+          <div class="ring-tint ring-tint--portrait"></div>
+          <div class="mockup-nav"><b>FORM / STUDIO</b><span>PROJECTS　 ABOUT</span></div>
+          <div class="mockup-body"><small>STRATEGY MEETS IMAGINATION</small><strong>Ideas with<br>character.</strong><p>Distinctive identity and digital experiences.</p><span class="mockup-cta">View selected work ↗</span></div>
+          <div class="mockup-foot"><span>IDENTITY · DIGITAL · MOTION</span><span>04 / 06</span></div>
         </article>
-        <article class="ring-card ring-card--hospitality" data-ring-card tabindex="0" aria-label="Hospitality website concept">
-          <div class="ring-art ring-art--hospitality"><div class="ring-hotel-sun"></div><span>STAY A LITTLE<br><em>longer.</em></span><b>THE SLOW HOUSE · ESCAPES</b></div><div class="ring-copy"><span>05 / HOSPITALITY</span><b>Sell the<br>feeling first.</b><small>Hospitality · Booking experience</small></div>
+        <article class="ring-card ring-card--travel" data-ring-card tabindex="0" aria-label="Travel and hospitality website concept">
+          <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=85" alt="Dramatic mountain landscape for a travel website design" loading="lazy" decoding="async">
+          <div class="ring-tint ring-tint--travel"></div>
+          <div class="mockup-nav"><b>WANDERLY</b><span>DESTINATIONS　 JOURNAL</span></div>
+          <div class="mockup-body"><small>FIND YOUR ELSEWHERE</small><strong>Make room<br>for wonder.</strong><p>Journeys worth remembering, beautifully planned.</p><span class="mockup-cta">Explore destinations ↗</span></div>
+          <div class="mockup-foot"><span>TAILORED TRAVEL EXPERIENCES</span><span>05 / 06</span></div>
         </article>
-        <article class="ring-card ring-card--tech" data-ring-card tabindex="0" aria-label="Technology brand website concept">
-          <div class="ring-art ring-art--tech"><span class="ring-tech-grid"></span><b>W/CRAFT</b><strong>Build beyond<br>the expected<span>.</span></strong><small>INTERACTIVE DIGITAL SYSTEMS</small><i>↗</i></div><div class="ring-copy"><span>06 / INTERACTIVE</span><b>Digital, with<br>dimension.</b><small>WebGL · Motion · Experience</small></div>
+        <article class="ring-card ring-card--analytics" data-ring-card tabindex="0" aria-label="Analytics dashboard website concept">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=85" alt="Business analytics display for a data dashboard website design" loading="lazy" decoding="async">
+          <div class="ring-tint ring-tint--analytics"></div>
+          <div class="mockup-nav"><b>INSIGHT / OS</b><span>OVERVIEW　 REPORTS</span></div>
+          <div class="mockup-body"><small>CLARITY FROM COMPLEXITY</small><strong>See the<br>signal.</strong><p>Live metrics that make better decisions easier.</p><span class="mockup-cta mockup-cta--blue">View dashboard ↗</span></div>
+          <div class="mockup-foot"><span>ANALYTICS · INTELLIGENCE</span><span>06 / 06</span></div>
         </article>
       </div>
+      <button type="button" class="ring-control ring-control--stage ring-control--next" data-ring-next aria-label="Next design">›</button>
       <div class="ring-hint" aria-hidden="true"><span>DRAG TO EXPLORE</span><i></i><span>CLICK TO FOCUS</span></div>
     </div>
-    <div class="ring-footer"><span data-ring-count>01 / 06</span><div class="ring-progress"><i data-ring-progress></i></div><span>CONCEPTS, BUILT WITH INTENT</span></div>
-  </section>
+    <div class="ring-footer"><span data-ring-count>01 / 06</span><div class="ring-progress"><i data-ring-progress></i></div><span>DESIGN · CODE · EXPERIENCE</span></div>
+  </div>
+  <div class="hero-cue" style="justify-content:flex-start;margin-top:26px" data-rv="fade"><span>Also available: 3D / WebGL experiences · custom 404 pages</span></div>
+  
 </section>
 
 <!-- ============================================================ chapter III -->
