@@ -1033,6 +1033,49 @@ body[data-layout-footer="b"] .foot-brand{ grid-template-columns:minmax(0,1fr) !i
 @media (max-width:560px){.signature-foot{padding-inline:20px}.signature-links{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:25px}.signature-name{font-size:19vw;margin-top:58px;letter-spacing:-.07em}.signature-foot-base{align-items:flex-start;flex-wrap:wrap}.signature-foot-base>span:nth-child(2){display:none}.signature-socials{margin-left:auto}}
 @media (prefers-reduced-motion:reduce){.signature-foot *{transition:none!important}}
 
+
+/* WEBCRAFT circular showcase — inspired by React Bits' 3D carousel interaction, implemented for this static site. */
+.showcase-ring{position:relative;margin:clamp(72px,10vw,140px) 0 30px;padding:clamp(24px,4vw,54px) 0 0;border-top:1px solid var(--line)}
+.ring-heading{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:28px}
+.ring-heading h3{margin:12px 0 8px;font-size:clamp(25px,3.2vw,44px);letter-spacing:-.045em;line-height:1.08}
+.ring-heading p{margin:0;color:var(--muted);font-size:13px}
+.ring-controls{display:flex;gap:8px;flex-shrink:0}
+.ring-control{display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:rgba(223,231,224,.035);font-size:20px;transition:background .25s,color .25s,border-color .25s,transform .25s}
+.ring-control:hover{background:var(--bone);color:var(--ink);border-color:var(--bone);transform:translateY(-2px)}
+.ring-stage{position:relative;height:clamp(340px,43vw,540px);perspective:1300px;perspective-origin:50% 48%;overflow:hidden;touch-action:pan-y;outline:none;user-select:none;-webkit-user-select:none}
+.ring-stage:focus-visible{outline:1px solid var(--ember);outline-offset:5px;border-radius:18px}
+.ring-track{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
+.ring-card{position:absolute;left:50%;top:50%;width:clamp(210px,25vw,310px);height:clamp(270px,34vw,410px);overflow:hidden;border:1px solid rgba(223,231,224,.16);border-radius:16px;background:#11161a;box-shadow:0 22px 70px rgba(0,0,0,.35);transform-style:preserve-3d;backface-visibility:hidden;cursor:grab;outline:none;transition:border-color .35s,box-shadow .35s}
+.ring-card:active{cursor:grabbing}.ring-card:focus-visible{border-color:var(--ember)}
+.ring-card>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.78);transition:transform .8s var(--ease-out),filter .8s}
+.ring-card:hover>img{transform:scale(1.05);filter:saturate(1)}
+.ring-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,7,9,.03) 10%,rgba(4,7,9,.15) 36%,rgba(4,7,9,.94) 100%)}
+.ring-copy{position:absolute;left:20px;right:20px;bottom:20px;display:flex;flex-direction:column;align-items:flex-start;gap:8px;pointer-events:none}
+.ring-copy>span{font-size:9px;letter-spacing:.2em;color:#ffad91}.ring-copy>b{font-size:clamp(24px,2.5vw,32px);font-weight:400;line-height:1.02;letter-spacing:-.045em}.ring-copy>small{font-size:10px;color:rgba(223,231,224,.68)}
+.ring-ui{position:absolute;left:17px;right:17px;top:17px;border:1px solid rgba(255,255,255,.2);background:rgba(6,9,12,.65);backdrop-filter:blur(12px);border-radius:9px;padding:13px;pointer-events:none}
+.ring-ui--commerce{display:flex;gap:5px;width:66%;height:34px;padding:10px}.ring-ui--commerce i{display:block;height:100%;width:33%;background:rgba(255,255,255,.28);border-radius:2px}
+.ring-ui--saas>span,.ring-ui--dashboard>span{font-size:7px;letter-spacing:.16em;color:rgba(255,255,255,.65)}
+.ring-ui--saas strong{display:block;margin-top:9px;font-size:18px;line-height:1.05;font-weight:400}
+.ring-bars{display:flex;gap:4px;align-items:end;height:27px;margin-top:9px}.ring-bars i{width:17%;background:#ff765a;border-radius:2px 2px 0 0}.ring-bars i:nth-child(1){height:28%}.ring-bars i:nth-child(2){height:48%}.ring-bars i:nth-child(3){height:38%}.ring-bars i:nth-child(4){height:82%}
+.ring-ui--dashboard{top:22px;left:22px;right:22px}.ring-ui--dashboard>span{display:flex;justify-content:space-between}.ring-ui--dashboard>span i{font-style:normal;color:#8df0bc}.ring-ui--dashboard strong{display:block;font-size:29px;letter-spacing:-.05em;font-weight:400;margin-top:7px}.ring-ui--dashboard small{font-size:8px;color:rgba(255,255,255,.6)}
+.ring-chart{display:flex;align-items:end;gap:4px;height:30px;margin-top:10px}.ring-chart i{flex:1;background:linear-gradient(0deg,#d84c35,#ffad76);border-radius:2px 2px 0 0}.ring-chart i:nth-child(1){height:30%}.ring-chart i:nth-child(2){height:48%}.ring-chart i:nth-child(3){height:38%}.ring-chart i:nth-child(4){height:66%}.ring-chart i:nth-child(5){height:50%}.ring-chart i:nth-child(6){height:75%}.ring-chart i:nth-child(7){height:57%}.ring-chart i:nth-child(8){height:88%}.ring-chart i:nth-child(9){height:100%}
+.ring-art{position:absolute;inset:0;overflow:hidden}.ring-art--studio{background:#d7d0c4;color:#191816;padding:28px}.ring-art--studio>span{position:absolute;top:65px;left:22px;font-size:clamp(32px,4vw,50px);line-height:.84;font-weight:600;letter-spacing:-.08em}.ring-art--studio em{font-family:Georgia,serif;font-weight:400}.ring-art--studio>i{position:absolute;width:170px;height:230px;right:-38px;bottom:-20px;border-radius:50% 50% 4% 4%;background:linear-gradient(135deg,#a5a097,#504e49);transform:rotate(24deg);box-shadow:-20px -10px 0 rgba(25,24,22,.09)}.ring-art--studio>b,.ring-art--hospitality>b{position:absolute;left:22px;top:18px;font-size:8px;letter-spacing:.18em}
+.ring-art--hospitality{background:linear-gradient(160deg,#b8c3b2,#66796c 60%,#2c403c);color:#f5f0e4;padding:26px}.ring-hotel-sun{position:absolute;width:160px;height:160px;top:70px;right:-18px;border-radius:50%;background:linear-gradient(145deg,#f3d9a3,#dca77c);box-shadow:0 0 75px rgba(246,220,168,.25)}.ring-art--hospitality:after{content:"";position:absolute;inset:40% 0 0;background:linear-gradient(0deg,rgba(22,39,35,.8),transparent)}.ring-art--hospitality>span{position:absolute;z-index:1;top:150px;left:22px;font-family:Georgia,serif;font-size:38px;line-height:.94;letter-spacing:-.06em}.ring-art--hospitality em{font-weight:400}.ring-art--hospitality>b{z-index:2}
+.ring-art--tech{background:#111318;color:#f3f0e8;padding:24px}.ring-tech-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:25px 25px;mask-image:linear-gradient(180deg,#000,transparent)}.ring-art--tech>b{position:relative;font-size:10px;letter-spacing:.22em}.ring-art--tech>strong{position:absolute;left:23px;top:94px;font-size:clamp(31px,4vw,48px);line-height:.97;letter-spacing:-.07em;font-weight:400}.ring-art--tech>strong span{color:#ff7256}.ring-art--tech>small{position:absolute;left:24px;bottom:28px;font-size:7px;letter-spacing:.16em;color:#a2a6b0}.ring-art--tech>i{position:absolute;right:22px;bottom:22px;font-style:normal;font-size:25px;color:#ff7256}
+.ring-hint{position:absolute;left:50%;bottom:5px;transform:translateX(-50%);display:flex;align-items:center;gap:12px;color:rgba(223,231,224,.36);font-size:8px;letter-spacing:.17em;white-space:nowrap;pointer-events:none}.ring-hint i{width:30px;height:1px;background:var(--ember);opacity:.75}
+.ring-footer{display:flex;align-items:center;gap:18px;margin-top:14px;color:var(--muted);font-size:9px;letter-spacing:.15em}.ring-progress{height:1px;background:var(--line);flex:1;overflow:hidden}.ring-progress i{display:block;width:16.666%;height:100%;background:var(--ember);transition:width .35s}.ring-footer>span:last-child{text-align:right}
+.nav-link,.signature-email,.cbtn{position:relative;isolation:isolate;overflow:hidden}
+.nav-link{border:1px solid transparent;border-radius:999px;padding:9px 14px;transition:background .3s,border-color .3s,color .3s}
+.nav-link:hover,.nav-link:focus-visible{background:rgba(223,231,224,.08);border-color:var(--line);color:var(--bone)}
+.nav-link:focus-visible,.cbtn:focus-visible,.signature-email:focus-visible{outline:1px solid var(--ember);outline-offset:3px}
+.cbtn,.signature-email{border-radius:999px;transition:border-color .3s,background .3s,transform .3s}
+.cbtn:hover,.signature-email:hover{transform:translateY(-2px);border-color:rgba(255,90,60,.55)}
+.cbtn::after,.signature-email::after{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,.08) 48%,transparent 76%);transform:translateX(-120%);transition:transform .7s var(--ease-out)}
+.cbtn:hover::after,.signature-email:hover::after{transform:translateX(120%)}
+@media(max-width:700px){.ring-heading{align-items:flex-start}.ring-heading p{max-width:38ch}.ring-stage{height:390px;perspective:950px}.ring-card{width:220px;height:300px}.ring-footer>span:last-child{display:none}.ring-hint{bottom:1px}}
+@media(max-width:480px){.ring-heading{gap:10px}.ring-heading h3{font-size:25px}.ring-controls{gap:5px}.ring-control{width:38px;height:38px}.ring-stage{height:360px}.ring-card{width:205px;height:278px}.ring-copy{left:15px;right:15px;bottom:16px}.ring-art--studio,.ring-art--hospitality,.ring-art--tech{padding:20px}.ring-art--hospitality>span{font-size:33px;top:145px}.ring-art--tech>strong{left:19px;font-size:34px}.ring-footer{gap:10px}}
+@media(prefers-reduced-motion:reduce){.ring-card,.ring-progress i,.ring-control{transition:none!important}}
+
 </style>
 </head>
 <body data-layout-hero="b" data-layout-story="b" data-layout-gallery="b"
@@ -1152,6 +1195,33 @@ body[data-layout-footer="b"] .foot-brand{ grid-template-columns:minmax(0,1fr) !i
     </article>
   </div>
   <div class="hero-cue" style="justify-content:flex-start;margin-top:26px" data-rv="fade"><span>Also available: 3D / WebGL experiences · custom 404 pages</span></div>
+  <section class="showcase-ring" id="showcase" aria-labelledby="showcase-title">
+    <div class="ring-heading"><div><span class="k">SELECTED DIRECTIONS</span><h3 id="showcase-title">A few ways WEBCRAFT can look.</h3><p>Distinct visual directions for modern brands, products and digital experiences.</p></div><div class="ring-controls"><button type="button" class="ring-control" data-ring-prev aria-label="Previous design">←</button><button type="button" class="ring-control" data-ring-next aria-label="Next design">→</button></div></div>
+    <div class="ring-stage" data-ring-stage tabindex="0" aria-label="Rotating website design carousel. Drag or use arrow keys to explore.">
+      <div class="ring-track" data-ring-track>
+        <article class="ring-card ring-card--commerce" data-ring-card tabindex="0" aria-label="Editorial commerce website concept">
+          <img src="assets/card-websites.webp" alt="Premium website design concept" loading="lazy" decoding="async"><div class="ring-shade"></div><div class="ring-copy"><span>01 / COMMERCE</span><b>Made to<br>make a mark.</b><small>Editorial storefront · Art direction</small></div><div class="ring-ui ring-ui--commerce"><i></i><i></i><i></i></div>
+        </article>
+        <article class="ring-card ring-card--saas" data-ring-card tabindex="0" aria-label="SaaS product website concept">
+          <img src="assets/card-landing.webp" alt="Dark premium landing page concept" loading="lazy" decoding="async"><div class="ring-shade"></div><div class="ring-copy"><span>02 / SAAS</span><b>Complex ideas.<br>Clear product.</b><small>Product landing page · Conversion</small></div><div class="ring-ui ring-ui--saas"><span>PRODUCT / 01</span><strong>Less noise.<br>More signal.</strong><div class="ring-bars"><i></i><i></i><i></i><i></i></div></div>
+        </article>
+        <article class="ring-card ring-card--dashboard" data-ring-card tabindex="0" aria-label="Analytics dashboard concept">
+          <img src="assets/card-python.webp" alt="Python analytics dashboard concept" loading="lazy" decoding="async"><div class="ring-shade"></div><div class="ring-copy"><span>03 / ANALYTICS</span><b>Data with<br>direction.</b><small>Python dashboards · Automation</small></div><div class="ring-ui ring-ui--dashboard"><span>OVERVIEW <i>● LIVE</i></span><strong>84.6%</strong><small>Operational efficiency</small><div class="ring-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        </article>
+        <article class="ring-card ring-card--studio" data-ring-card tabindex="0" aria-label="Creative studio website concept">
+          <div class="ring-art ring-art--studio"><span>FORM<br>FOLLOWS<br><em>feeling.</em></span><i></i><b>STUDIO / 2026</b></div><div class="ring-copy"><span>04 / CREATIVE</span><b>Make the<br>ordinary rare.</b><small>Creative studio · Portfolio</small></div>
+        </article>
+        <article class="ring-card ring-card--hospitality" data-ring-card tabindex="0" aria-label="Hospitality website concept">
+          <div class="ring-art ring-art--hospitality"><div class="ring-hotel-sun"></div><span>STAY A LITTLE<br><em>longer.</em></span><b>THE SLOW HOUSE · ESCAPES</b></div><div class="ring-copy"><span>05 / HOSPITALITY</span><b>Sell the<br>feeling first.</b><small>Hospitality · Booking experience</small></div>
+        </article>
+        <article class="ring-card ring-card--tech" data-ring-card tabindex="0" aria-label="Technology brand website concept">
+          <div class="ring-art ring-art--tech"><span class="ring-tech-grid"></span><b>W/CRAFT</b><strong>Build beyond<br>the expected<span>.</span></strong><small>INTERACTIVE DIGITAL SYSTEMS</small><i>↗</i></div><div class="ring-copy"><span>06 / INTERACTIVE</span><b>Digital, with<br>dimension.</b><small>WebGL · Motion · Experience</small></div>
+        </article>
+      </div>
+      <div class="ring-hint" aria-hidden="true"><span>DRAG TO EXPLORE</span><i></i><span>CLICK TO FOCUS</span></div>
+    </div>
+    <div class="ring-footer"><span data-ring-count>01 / 06</span><div class="ring-progress"><i data-ring-progress></i></div><span>CONCEPTS, BUILT WITH INTENT</span></div>
+  </section>
 </section>
 
 <!-- ============================================================ chapter III -->
@@ -1267,5 +1337,6 @@ body[data-layout-footer="b"] .foot-brand{ grid-template-columns:minmax(0,1fr) !i
 
 <script src="secret-pathways-assets/three.min.js?v=3" defer></script>
 <script src="assets/app.js?v=3" defer></script>
+<script src="assets/webcraft-carousel.js?v=1" defer></script>
 </body>
 </html>
