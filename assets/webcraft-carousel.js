@@ -35,6 +35,7 @@
   let autoFrame = 0;
   let lastAutoFrame = 0;
   let snapFrame = 0;
+  let interactingUntil = 0;
 
   const wrapIndex = (value, length) => ((value % length) + length) % length;
   const wrapDegrees = value => ((((value + 180) % 360) + 360) % 360) - 180;
@@ -85,6 +86,7 @@
     cancelSnap();
     const from = angle;
     const delta = targetAngle - from;
+    interactingUntil = performance.now() + duration;
     if (prefersReducedMotion || duration <= 0 || Math.abs(delta) < 0.01) {
       angle = targetAngle;
       render();
@@ -126,7 +128,8 @@
       document.hidden ||
       pointerDown ||
       stage.matches(':hover') ||
-      stage.contains(document.activeElement);
+      stage.contains(document.activeElement) ||
+      now < interactingUntil;
 
     if (!shouldPause && !prefersReducedMotion) {
       angle -= autoplaySpeed * deltaSeconds;
